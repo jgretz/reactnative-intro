@@ -1,5 +1,6 @@
 // imports
 import React, { Component, Text, View, AppRegistry, StyleSheet } from 'react-native';
+import formatTime from 'minutes-seconds-milliseconds';
 
 import Timer from '../components/timer';
 import Button from '../components/button';
@@ -9,12 +10,15 @@ class StopWatch extends Component {
   constructor(props) {
     super(props);
 
+    this.renderLaps = this.renderLaps.bind(this);
     this.handleStartStop = this.handleStartStop.bind(this);
     this.handleLap = this.handleLap.bind(this);
 
     this.state = {
+      startTime: null,
       timeElapsed: null,
-      interval: null
+      interval: null,
+      laps: []
     };
   }
 
@@ -33,12 +37,22 @@ class StopWatch extends Component {
           </View>
         </View>
         <View style={styles.footer}>
-          <Text>
-            I am a list of laps
-          </Text>
+          { this.renderLaps() }
         </View>
       </View>
     );
+  }
+
+  renderLaps() {
+    return this.state.laps.map((lap, index) => {
+      return (
+        <View key={index}>
+          <Text style={styles.lapText}>
+            Lap #{index+1}: {formatTime(lap)}
+          </Text>
+        </View>
+      )
+    });
   }
 
   handleStartStop() {
@@ -51,10 +65,13 @@ class StopWatch extends Component {
       return;
     }
 
-    const startTime = new Date();
+    this.setState({
+      startTime: new Date()
+    });
+
     const interval = setInterval(() => {
       this.setState({
-        timeElapsed: new Date() - startTime
+        timeElapsed: new Date() - this.state.startTime
       });
     }, 30);
 
@@ -62,7 +79,12 @@ class StopWatch extends Component {
   }
 
   handleLap() {
+    const lap = this.state.timeElapsed;
 
+    this.setState({
+      startTime: new Date(),
+      laps: [...this.state.laps, lap]
+    });
   }
 }
 
@@ -76,7 +98,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   footer: {
-    flex: 1
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   timerContainer: {
     flex: 5,
@@ -94,6 +118,9 @@ const styles = StyleSheet.create({
   },
   stopButton: {
     borderColor: '#CC0000'
+  },
+  lapText: {
+    fontSize: 40
   }
 });
 
