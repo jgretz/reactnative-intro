@@ -1,0 +1,25 @@
+{
+  "name": "api-stub",
+  "version": "1.0.0",
+  "description": "easy place to stub out api calls",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/truefit/softwriters-pod-mobile.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/truefit/softwriters-pod-mobile#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "glob": "^6.0.4",
+    "use-strict": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}
